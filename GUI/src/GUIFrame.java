@@ -1,3 +1,6 @@
+
+import javax.swing.JOptionPane;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -242,13 +245,21 @@ public class GUIFrame extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        Buffer buffer = new Buffer();
+        int bufferSize=1;
+        try {
+            bufferSize = Integer.parseInt(jTextField3.getText());
+            Buffer buffer = new Buffer(bufferSize);
         
-        Producer producer = new Producer(buffer);
-        producer.start();
+            Producer producer = new Producer(buffer);
+            producer.start();
         
-        Consumer consumer = new Consumer(buffer);
-        consumer.start();
+            Consumer consumer = new Consumer(buffer);
+            consumer.start();
+        
+        } catch (NumberFormatException ex){
+            JOptionPane.showMessageDialog(null, "Ingrese un numero de entero\n para el tamaño del buffer");
+        }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

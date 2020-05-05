@@ -9,11 +9,12 @@ import java.util.LinkedList;
 public class Buffer {
     
     private Queue<Character> buffer;
-    private final int MAX_SIZE = 10;
+    private int MAX_SIZE;
     //private char buffer;
     
-    Buffer() {
+    Buffer(int size) {
         this.buffer = new LinkedList<Character>();
+        this.MAX_SIZE = size;
     }
     
     synchronized char consume() {

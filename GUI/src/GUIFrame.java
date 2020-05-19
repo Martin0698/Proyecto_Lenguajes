@@ -1,3 +1,9 @@
+
+import java.awt.Color;
+import javax.swing.JFormattedTextField;
+import javax.swing.JOptionPane;
+import javax.swing.JSpinner;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -15,6 +21,10 @@ public class GUIFrame extends javax.swing.JFrame {
      */
     public GUIFrame() {
         initComponents();
+          
+       
+      
+     
     }
 
     /**
@@ -58,11 +68,21 @@ public class GUIFrame extends javax.swing.JFrame {
 
         jLabel5.setText("Tiempo de Espera (ms)");
 
+        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField3ActionPerformed(evt);
+            }
+        });
+
         jLabel6.setText("Rango de Valores (n, m)");
 
         jLabel1.setText("Productores");
 
         jLabel2.setText("Consumidores");
+
+        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(1, 1, 10, 1));
+
+        jSpinner2.setModel(new javax.swing.SpinnerNumberModel(1, 1, 10, 1));
 
         jLabel3.setText("Tamaño del Buffer");
 
@@ -242,14 +262,63 @@ public class GUIFrame extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        Buffer buffer = new Buffer();
+        Boolean todo_bien_datos = true;
+        
+      //Cantidad  
+      int cant_producer=  (int) jSpinner1.getValue() ;
+      int cant_consumer=  (int) jSpinner2.getValue() ;
+              
+      //Validad de Textfield
+    try{
+        int espera_producer = Integer.parseInt(jTextField1.getText());
+        int espera_consumer = Integer.parseInt(jTextField2.getText());
+        int buffer_t = Integer.parseInt(jTextField3.getText());
+        
+        if (!( (espera_consumer>=0) && (espera_consumer <=10000))){
+            
+            JOptionPane.showMessageDialog(this, "Tiempo de espera en Consumer está fuera  del rango");
+            todo_bien_datos= false;
+        }
+        
+        if (!( (espera_producer>=0) && (espera_producer <=10000))){
+            
+            JOptionPane.showMessageDialog(this, "Tiempo de espera en Producer está fuera  del rango");
+            todo_bien_datos= false;
+        }
+        if (!( (buffer_t>=1) && (buffer_t <=100))){
+            
+            JOptionPane.showMessageDialog(this, "Tamaño de buffer está fuera  del rango");
+            todo_bien_datos= false;
+        }
+        
+        
+    }catch(Exception a){
+        
+        JOptionPane.showMessageDialog(this, "Su tiempo de espera en Consumer o Producer, tiene caractéres no Numéricos");
+        todo_bien_datos= false;
+    }
+          
+    
+    if(todo_bien_datos){
+         Buffer buffer = new Buffer();
         
         Producer producer = new Producer(buffer);
         producer.start();
         
         Consumer consumer = new Consumer(buffer);
         consumer.start();
+     } 
+        
+        
+      
+        
+        
+        
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -314,4 +383,10 @@ public class GUIFrame extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     // End of variables declaration//GEN-END:variables
+
+    
+
+
 }
+
+

@@ -249,62 +249,71 @@ public class GUIFrame extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        
-          //Cantidad  
-      int cant_producer=  (int) jSpinner1.getValue() ;
-      int cant_consumer=  (int) jSpinner2.getValue() ;
-      int buffer_t ;
-      int espera_consumer;
-       int espera_producer;  
-       
-       
-       
-      //Validad de Textfield
-    try{
-         espera_producer = Integer.parseInt(jTextField1.getText());
-         espera_consumer = Integer.parseInt(jTextField2.getText());
-         buffer_t = Integer.parseInt(jTextField3.getText());
-        
-        if (!( (espera_consumer>=0) && (espera_consumer <=10000))){
-            
-            JOptionPane.showMessageDialog(this, "Tiempo de espera en Consumer está fuera  del rango");
-           return;
-        }
-        
-        if (!( (espera_producer>=0) && (espera_producer <=10000))){
-            
-            JOptionPane.showMessageDialog(this, "Tiempo de espera en Producer está fuera  del rango");
-            return;
-        }
-        if (!( (buffer_t>=1) && (buffer_t <=100))){
-            
-            JOptionPane.showMessageDialog(this, "Tamaño de buffer está fuera  del rango");
-            return;
-        }
-        
-        
-    }catch(Exception a){
-        
-          JOptionPane.showMessageDialog(this, "Su tiempo de espera en Consumer o Producer, tiene caractéres no Numéricos");
-        return;
       
-    }
-        
-        
-        
-        
-        try {
-            
-            Buffer buffer = new Buffer(buffer_t);
-        
-            Producer producer = new Producer(buffer);
-            producer.start();
-        
-            Consumer consumer = new Consumer(buffer);
-            consumer.start();
-        
-        } catch (NumberFormatException ex){
-            JOptionPane.showMessageDialog(null, "Ingrese un numero de entero\n para el tamaño del buffer");
+        if(!isRunning){
+            int cant_producer=  (int) jSpinner1.getValue() ;
+            int cant_consumer=  (int) jSpinner2.getValue() ;
+            int buffer_t ;
+            int espera_consumer;
+            int espera_producer;  
+
+            //Validad de Textfield
+          try{
+               espera_producer = Integer.parseInt(jTextField1.getText());
+               espera_consumer = Integer.parseInt(jTextField2.getText());
+               buffer_t = Integer.parseInt(jTextField3.getText());
+              if (!( (espera_consumer>=0) && (espera_consumer <=10000))){
+                  JOptionPane.showMessageDialog(this, "Tiempo de espera en Consumer está fuera  del rango");
+                 return;
+              }
+              if (!( (espera_producer>=0) && (espera_producer <=10000))){
+                  JOptionPane.showMessageDialog(this, "Tiempo de espera en Producer está fuera  del rango");
+                  return;
+              }
+              if (!( (buffer_t>=1) && (buffer_t <=100))){
+                  JOptionPane.showMessageDialog(this, "Tamaño de buffer está fuera  del rango");
+                  return;
+              }
+          }catch(NumberFormatException e){
+                JOptionPane.showMessageDialog(this, "Error, existen caracteres no numéricos", "ERROR", JOptionPane.ERROR_MESSAGE);
+              return;
+          }
+          catch (Exception e){
+              e.printStackTrace();
+              return;
+          }
+              jButton1.setText("Stop");
+              isRunning = true;
+              Buffer buffer = new Buffer(buffer_t);
+              producers = new Producer[cant_producer];
+              consumers = new Consumer[cant_consumer];
+              
+              for(int i=0;i<cant_producer; i++){
+                  producers[i] = new Producer(buffer,espera_producer);
+                  producers[i].start();
+                  
+              }
+              for(int j=0;j<cant_consumer; j++){
+                  consumers[j] = new Consumer(buffer,espera_consumer);
+                  consumers[j].start();
+              }
+        }
+        else{
+            isRunning = false;
+            jButton1.setText("Start");
+            for(Producer p : producers){
+                if(p!=null){
+                    System.out.println("Here");
+                   p.terminate();
+                }
+            }
+            for(Consumer c : consumers){
+                if(c!=null){
+                    
+                    System.out.println("Here2");
+                    c.terminate();
+                }
+            }
         }
         
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -372,4 +381,8 @@ public class GUIFrame extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     // End of variables declaration//GEN-END:variables
+
+    private boolean isRunning = false;
+    private Producer[] producers;
+    private Consumer[] consumers;
 }

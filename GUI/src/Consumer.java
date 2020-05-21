@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 public class Consumer extends Thread {
     Buffer buffer;
     private int waitMillis;
+    private volatile boolean Running = true;
     
     Consumer(Buffer buffer, int ms) {
         this.buffer = buffer;
@@ -16,18 +17,24 @@ public class Consumer extends Thread {
     @Override
     public void run() {
         System.out.println("Running Consumer...");
-        char product;
+        String product;
         
-        for(int i=0 ; i<5 ; i++) {
+        while(Running) {
             product = this.buffer.consume();
             //System.out.println("Consumer consumed: " + product);
-            Buffer.print("Consumer consumed: " + product);
             
-            try {
-                Thread.sleep(this.waitMillis);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Producer.class.getName()).log(Level.SEVERE, null, ex);
-            }
+                Buffer.print("Consumer "+ this.getId()  + " consumed: " + product);
+                //TODO: solve scheme operations
+
+                try {
+                    Thread.sleep(this.waitMillis);
+                } catch (InterruptedException ex) {
+                    System.out.println("Stopped");
+                }
         }
+    }
+    
+    public void terminate(){
+        Running = false;
     }
 }

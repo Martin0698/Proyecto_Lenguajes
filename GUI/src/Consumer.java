@@ -6,9 +6,11 @@ import java.util.logging.Logger;
 
 public class Consumer extends Thread {
     Buffer buffer;
+    private int waitMillis;
     
-    Consumer(Buffer buffer) {
+    Consumer(Buffer buffer, int ms) {
         this.buffer = buffer;
+        this.waitMillis = ms;
     }
     
     @Override
@@ -22,7 +24,7 @@ public class Consumer extends Thread {
             Buffer.print("Consumer consumed: " + product);
             
             try {
-                Thread.sleep(1000);
+                Thread.sleep(this.waitMillis);
             } catch (InterruptedException ex) {
                 Logger.getLogger(Producer.class.getName()).log(Level.SEVERE, null, ex);
             }

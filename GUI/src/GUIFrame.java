@@ -67,6 +67,10 @@ public class GUIFrame extends javax.swing.JFrame {
 
         jLabel2.setText("Consumidores");
 
+        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(1, 1, 10, 1));
+
+        jSpinner2.setModel(new javax.swing.SpinnerNumberModel(1, 1, 10, 1));
+
         jLabel3.setText("Tamaño del Buffer");
 
         jLabel4.setText("Cantidad");
@@ -245,10 +249,53 @@ public class GUIFrame extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        int bufferSize=1;
+        
+          //Cantidad  
+      int cant_producer=  (int) jSpinner1.getValue() ;
+      int cant_consumer=  (int) jSpinner2.getValue() ;
+      int buffer_t ;
+      int espera_consumer;
+       int espera_producer;  
+       
+       
+       
+      //Validad de Textfield
+    try{
+         espera_producer = Integer.parseInt(jTextField1.getText());
+         espera_consumer = Integer.parseInt(jTextField2.getText());
+         buffer_t = Integer.parseInt(jTextField3.getText());
+        
+        if (!( (espera_consumer>=0) && (espera_consumer <=10000))){
+            
+            JOptionPane.showMessageDialog(this, "Tiempo de espera en Consumer está fuera  del rango");
+           return;
+        }
+        
+        if (!( (espera_producer>=0) && (espera_producer <=10000))){
+            
+            JOptionPane.showMessageDialog(this, "Tiempo de espera en Producer está fuera  del rango");
+            return;
+        }
+        if (!( (buffer_t>=1) && (buffer_t <=100))){
+            
+            JOptionPane.showMessageDialog(this, "Tamaño de buffer está fuera  del rango");
+            return;
+        }
+        
+        
+    }catch(Exception a){
+        
+          JOptionPane.showMessageDialog(this, "Su tiempo de espera en Consumer o Producer, tiene caractéres no Numéricos");
+        return;
+      
+    }
+        
+        
+        
+        
         try {
-            bufferSize = Integer.parseInt(jTextField3.getText());
-            Buffer buffer = new Buffer(bufferSize);
+            
+            Buffer buffer = new Buffer(buffer_t);
         
             Producer producer = new Producer(buffer);
             producer.start();

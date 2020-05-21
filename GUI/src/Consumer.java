@@ -22,14 +22,15 @@ public class Consumer extends Thread {
         while(Running) {
             product = this.buffer.consume();
             //System.out.println("Consumer consumed: " + product);
-            Buffer.print("Consumer "+ this.getId()  + " consumed: " + product);
-            //TODO: solve scheme operations
             
-            try {
-                Thread.sleep(this.waitMillis);
-            } catch (InterruptedException ex) {
-                System.out.println("Stopped");
-            }
+                Buffer.print("Consumer "+ this.getId()  + " consumed: " + product);
+                //TODO: solve scheme operations
+
+                try {
+                    Thread.sleep(this.waitMillis);
+                } catch (InterruptedException ex) {
+                    System.out.println("Stopped");
+                }
         }
     }
     

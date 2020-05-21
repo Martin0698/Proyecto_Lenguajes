@@ -5,6 +5,7 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+
 public class Producer extends Thread {
     Buffer buffer;
     private int waitMillis;
@@ -17,6 +18,7 @@ public class Producer extends Thread {
     @Override
     public void run() {
         System.out.println("Running Producer...");
+        
         String products = "+-/*";
         
         //TODO, generate list with the m,n range values.
@@ -32,11 +34,9 @@ public class Producer extends Thread {
         String product;
         while(Running) {
             r= new Random(System.currentTimeMillis());
-            operator = products.charAt(r.nextInt(4));
             
-            rval1.setSeed(7);
-            int Value1 = numbers[r.nextInt((difference) + n)];
-            rval2.setSeed(9);
+            operator = products.charAt((int) (Math.random()*4) );
+            int Value1 = numbers[(int)(Math.random() *difference)+ n];
             int Value2 = numbers[r.nextInt((difference) + n)];
             product="("+operator+" "+ Value1 +" " +Value2+ ")";
             
@@ -49,6 +49,7 @@ public class Producer extends Thread {
             } catch (InterruptedException ex) {
                 System.out.println("Stopped thread");
             }
+            
         }
     }
     

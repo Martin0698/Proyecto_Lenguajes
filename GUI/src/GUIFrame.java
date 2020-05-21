@@ -291,6 +291,7 @@ public class GUIFrame extends javax.swing.JFrame {
               for(int i=0;i<cant_producer; i++){
                   producers[i] = new Producer(buffer,espera_producer);
                   producers[i].start();
+                  
               }
               for(int j=0;j<cant_consumer; j++){
                   consumers[j] = new Consumer(buffer,espera_consumer);

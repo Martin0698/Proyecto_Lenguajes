@@ -9,10 +9,15 @@ import java.util.logging.Logger;
 public class Producer extends Thread {
     Buffer buffer;
     private int waitMillis;
+    private int n;
+    private int m;
     private volatile boolean Running = true;
-    Producer(Buffer buffer, int ms) {
+    
+    Producer(Buffer buffer, int ms, int n, int m) {
         this.buffer = buffer;
         this.waitMillis = ms;
+        this.n= n;
+        this.m= m;
     }
     
     @Override
@@ -22,11 +27,11 @@ public class Producer extends Thread {
         String products = "+-/*";
         
         //TODO, generate list with the m,n range values.
-        int[] numbers={0,1,2,3,4,5,6,7,8,9};
+        
         //TODO Get n m and get the difference;
-        int m = 9;
-        int n = 0;
         int difference = m-n;
+      
+        
         Random r, rval1, rval2;
         rval1 = new Random(System.currentTimeMillis());
             rval2 = new Random(System.currentTimeMillis());
@@ -36,8 +41,8 @@ public class Producer extends Thread {
             r= new Random(System.currentTimeMillis());
             
             operator = products.charAt((int) (Math.random()*4) );
-            int Value1 = numbers[(int)(Math.random() *difference)+ n];
-            int Value2 = numbers[r.nextInt((difference) + n)];
+            int Value1 = (int)(Math.random() *difference)+ n;
+            int Value2 = (int)(Math.random() *difference)+ n;
             product="("+operator+" "+ Value1 +" " +Value2+ ")";
             
             this.buffer.produce(product);

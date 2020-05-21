@@ -255,9 +255,28 @@ public class GUIFrame extends javax.swing.JFrame {
             int cant_consumer=  (int) jSpinner2.getValue() ;
             int buffer_t ;
             int espera_consumer;
-            int espera_producer;  
+            int espera_producer; 
+            int valor1=0;
+            int valor2=9;
 
             //Validad de Textfield
+            
+            
+            try{  
+                String rango = jTextField4.getText();
+                valor1 = Character.getNumericValue(rango.charAt(1));                
+                valor2 = Character.getNumericValue(rango.charAt(3));                
+                if(valor1 > valor2){
+                    JOptionPane.showMessageDialog(this, "Error, rango incorrecto", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    return;
+
+                }
+             }
+            catch(Exception e){
+               JOptionPane.showMessageDialog(this, "Error, formato incorrecto en rango", "ERROR", JOptionPane.ERROR_MESSAGE);
+               return;
+            }
+            
           try{
                espera_producer = Integer.parseInt(jTextField1.getText());
                espera_consumer = Integer.parseInt(jTextField2.getText());
@@ -289,7 +308,7 @@ public class GUIFrame extends javax.swing.JFrame {
               consumers = new Consumer[cant_consumer];
               
               for(int i=0;i<cant_producer; i++){
-                  producers[i] = new Producer(buffer,espera_producer);
+                  producers[i] = new Producer(buffer,espera_producer, valor1, valor2 );
                   producers[i].start();
                   
               }

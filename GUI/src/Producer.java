@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 public class Producer extends Thread {
     Buffer buffer;
     private int waitMillis;
-    
+    private volatile boolean Running = true;
     Producer(Buffer buffer, int ms) {
         this.buffer = buffer;
         this.waitMillis = ms;
@@ -17,22 +17,44 @@ public class Producer extends Thread {
     @Override
     public void run() {
         System.out.println("Running Producer...");
-        String products = "AEIOU";
-        Random r = new Random(System.currentTimeMillis());
-        char product;
+        String products = "+-/*";
         
-        for(int i=0 ; i<5 ; i++) {
-            product = products.charAt(r.nextInt(5));
+        //TODO, generate list with the m,n range values.
+        int[] numbers={0,1,2,3,4,5,6,7,8,9};
+        //TODO Get n m and get the difference;
+        int m = 9;
+        int n = 0;
+        int difference = m-n;
+        Random r, rval1, rval2;
+        rval1 = new Random(System.currentTimeMillis());
+            rval2 = new Random(System.currentTimeMillis());
+        char operator;
+        String product;
+        while(Running) {
+            r= new Random(System.currentTimeMillis());
+            operator = products.charAt(r.nextInt(4));
+            
+            rval1.setSeed(7);
+            int Value1 = numbers[r.nextInt((difference) + n)];
+            rval2.setSeed(9);
+            int Value2 = numbers[r.nextInt((difference) + n)];
+            product="("+operator+" "+ Value1 +" " +Value2+ ")";
+            
             this.buffer.produce(product);
             //System.out.println("Producer produced: " + product);
-            Buffer.print("Producer produced: " + product);
+            Buffer.print("Producer " + this.getId() + " produced: " + product);
             
             try {
                 Thread.sleep(this.waitMillis);
             } catch (InterruptedException ex) {
-                Logger.getLogger(Producer.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("Stopped thread");
             }
         }
+    }
+    
+    public void terminate(){
+        System.out.println("Stopping producer...");
+        Running = false;
     }
     
 }

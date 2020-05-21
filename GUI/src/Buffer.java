@@ -8,17 +8,17 @@ import java.util.LinkedList;
 
 public class Buffer {
     
-    private Queue<Character> buffer;
+    private Queue<String> buffer;
     private int MAX_SIZE;
     //private char buffer;
     
     Buffer(int size) {
-        this.buffer = new LinkedList<Character>();
+        this.buffer = new LinkedList<String>();
         this.MAX_SIZE = size;
     }
     
-    synchronized char consume() {
-        char product = 0;
+    synchronized String consume() {
+        String product = "";
         
         while(this.buffer.isEmpty()) {
             try {
@@ -34,7 +34,7 @@ public class Buffer {
         return product;
     }
     
-    synchronized void produce(char product) {
+    synchronized void produce(String product) {
         while(this.buffer.size()>=MAX_SIZE) {
             try {
                 wait(1000);

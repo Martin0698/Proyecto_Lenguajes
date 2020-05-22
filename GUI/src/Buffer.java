@@ -6,19 +6,19 @@ import java.util.logging.Logger;
 import java.util.Queue;
 import java.util.LinkedList;
 
-public class Buffer {
+public class Buffer<E> {
     
-    private Queue<Character> buffer;
+    private Queue<E> buffer;
     private int MAX_SIZE;
     //private char buffer;
     
     Buffer(int size) {
-        this.buffer = new LinkedList<Character>();
+        this.buffer = new LinkedList<E>();
         this.MAX_SIZE = size;
     }
     
-    synchronized char consume() {
-        char product = 0;
+    synchronized Object consume() {
+        E product;
         
         while(this.buffer.isEmpty()) {
             try {
@@ -34,7 +34,7 @@ public class Buffer {
         return product;
     }
     
-    synchronized void produce(char product) {
+    synchronized void produce(E product) {
         while(this.buffer.size()>=MAX_SIZE) {
             try {
                 wait(1000);

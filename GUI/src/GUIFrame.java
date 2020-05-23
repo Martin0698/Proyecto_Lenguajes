@@ -1,6 +1,6 @@
 
 import javax.swing.JOptionPane;
-
+import javax.swing.table.*;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -18,6 +18,19 @@ public class GUIFrame extends javax.swing.JFrame {
      */
     public GUIFrame() {
         initComponents();
+        DefaultTableModel model1 = (DefaultTableModel) jTable1.getModel();
+        DefaultTableModel model2 = (DefaultTableModel) jTable2.getModel();
+        Object[]colnames1={"Operador","Valor1","Valor2",""};
+        Object[]colnames2={"Operador","Valor1","Valor2","Resultado"};
+        model1.setColumnIdentifiers(colnames1);
+        model2.setColumnIdentifiers(colnames2);
+        model1.setRowCount(0);
+        model2.setRowCount(0);
+        
+        /*model1.addRow(new Object[]{"a", "a", "a"});
+        model1.addRow(new Object[]{"a", "a", "a"});
+        model1.addRow(new Object[]{"a", "a", "a"});
+        model2.addRow(new Object[]{"a", "a", "a"});*/
     }
 
     /**
@@ -183,16 +196,20 @@ public class GUIFrame extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
-                    .addComponent(jSpinner4))
-                .addContainerGap(11, Short.MAX_VALUE))
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 211, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jSpinner4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(41, 41, 41))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(16, 16, 16))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -249,7 +266,9 @@ public class GUIFrame extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-      
+        
+        
+        
         if(!isRunning){
             int cant_producer=  (int) jSpinner1.getValue() ;
             int cant_consumer=  (int) jSpinner2.getValue() ;
@@ -259,13 +278,14 @@ public class GUIFrame extends javax.swing.JFrame {
             int valor1=0;
             int valor2=9;
 
+            this.jProgressBar1.setMinimum(0);
+            this.jProgressBar1.setMaximum(Integer.parseInt(jTextField3.getText()));
             //Validad de Textfield
             
             
             try{  
-                String rango = jTextField4.getText();
-                valor1 = Character.getNumericValue(rango.charAt(1));                
-                valor2 = Character.getNumericValue(rango.charAt(3));                
+                valor1 = Integer.parseInt(jTextField4.getText());                
+                valor2 = (int)jSpinner3.getValue();                
                 if(valor1 > valor2){
                     JOptionPane.showMessageDialog(this, "Error, rango incorrecto", "ERROR", JOptionPane.ERROR_MESSAGE);
                     return;
@@ -274,6 +294,7 @@ public class GUIFrame extends javax.swing.JFrame {
              }
             catch(Exception e){
                JOptionPane.showMessageDialog(this, "Error, formato incorrecto en rango", "ERROR", JOptionPane.ERROR_MESSAGE);
+               //JOptionPane.showMessageDialog(this, e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
                return;
             }
             
@@ -303,7 +324,7 @@ public class GUIFrame extends javax.swing.JFrame {
           }
               jButton1.setText("Stop");
               isRunning = true;
-              Buffer buffer = new Buffer(buffer_t);
+              Buffer buffer = new Buffer(buffer_t,(DefaultTableModel) jTable1.getModel(),jProgressBar1);
               producers = new Producer[cant_producer];
               consumers = new Consumer[cant_consumer];
               
@@ -313,7 +334,7 @@ public class GUIFrame extends javax.swing.JFrame {
                   
               }
               for(int j=0;j<cant_consumer; j++){
-                  consumers[j] = new Consumer(buffer,espera_consumer);
+                  consumers[j] = new Consumer(buffer,espera_consumer,(DefaultTableModel) jTable2.getModel());
                   consumers[j].start();
               }
         }

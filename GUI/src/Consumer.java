@@ -30,7 +30,7 @@ public class Consumer extends Thread {
                 char operador = product.charAt(1);
                 int valor1 = Character.getNumericValue(product.charAt(3));                
                 int valor2 = Character.getNumericValue(product.charAt(5));
-                Object[]rowData;
+                Object[]rowData={operador,valor1,valor2,resultado_scheme};
 
                 if(valor2 == 0){
                     rowData={operador,valor1,valor2,"INDETERMINADO"};

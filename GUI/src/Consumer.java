@@ -33,7 +33,7 @@ public class Consumer extends Thread {
                 Object[]rowData;
 
                 if(valor2 == 0){
-                    Object[]rowData={operador,valor1,valor2,"INDETERMINADO"};
+                    rowData={operador,valor1,valor2,"INDETERMINADO"};
                 }
                 else{
                    rowData={operador,valor1,valor2,resultado_scheme};

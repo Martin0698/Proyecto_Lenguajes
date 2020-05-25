@@ -310,6 +310,10 @@ public class GUIFrame extends javax.swing.JFrame {
         
         
         if(!isRunning){
+            DefaultTableModel model1 = (DefaultTableModel) jTable1.getModel();
+            DefaultTableModel model2 = (DefaultTableModel) jTable2.getModel();
+            model1.setRowCount(0);
+            model2.setRowCount(0);
             int cant_producer=  (int) jSpinner1.getValue() ;
             int cant_consumer=  (int) jSpinner2.getValue() ;
             int buffer_t ;
@@ -408,10 +412,7 @@ public class GUIFrame extends javax.swing.JFrame {
                     c.terminate();
                 }
             }
-            DefaultTableModel model1 = (DefaultTableModel) jTable1.getModel();
-       		DefaultTableModel model2 = (DefaultTableModel) jTable2.getModel();
-       	 	model1.setRowCount(0);
-        	model2.setRowCount(0);
+            
         }
         
     }//GEN-LAST:event_jButton1ActionPerformed

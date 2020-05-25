@@ -333,7 +333,7 @@ public class GUIFrame extends javax.swing.JFrame {
                 if(valor1<0 || valor2>9){
                     JOptionPane.showMessageDialog(this,"Error, los valores para rango deben ser de 0 a 9.", "ERROR", JOptionPane.ERROR_MESSAGE);
                 }
-             }
+             
              }
             catch(Exception e){
                JOptionPane.showMessageDialog(this, "Error, formato incorrecto en rango", "ERROR", JOptionPane.ERROR_MESSAGE);

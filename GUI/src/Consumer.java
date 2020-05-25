@@ -3,15 +3,18 @@
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.table.*;
 
 public class Consumer extends Thread {
     Buffer buffer;
     private int waitMillis;
     private volatile boolean Running = true;
+    DefaultTableModel consumed;
     
-    Consumer(Buffer buffer, int ms) {
+    Consumer(Buffer buffer, int ms, DefaultTableModel consumed) {
         this.buffer = buffer;
         this.waitMillis = ms;
+        this.consumed = consumed;
     }
     
     @Override
@@ -24,6 +27,11 @@ public class Consumer extends Thread {
             //System.out.println("Consumer consumed: " + product);
                 int resultado_scheme = schemesolver(product);
                 Buffer.print("Consumer "+ this.getId()  + " consumed: " + product+" result scheme: "+resultado_scheme);
+                char operador = product.charAt(1);
+                int valor1 = Character.getNumericValue(product.charAt(3));                
+                int valor2 = Character.getNumericValue(product.charAt(5));
+                Object[]rowData={operador,valor1,valor2,resultado_scheme};
+                this.consumed.addRow(rowData);
                 //TODO: solve scheme operations
                 
 
@@ -37,7 +45,7 @@ public class Consumer extends Thread {
     
     public int schemesolver(String operacion){
         
-        char operador = operacion.charAt(1);
+       char operador = operacion.charAt(1);
         
        int valor1 = Character.getNumericValue(operacion.charAt(3));                
        int valor2 = Character.getNumericValue(operacion.charAt(5));  
@@ -55,7 +63,8 @@ public class Consumer extends Thread {
                 result= valor1 * valor2;
                 break;
                 case '/':
-                result= valor1 / valor2;
+                    if(valor2 == 0) result = 0;
+                    else result= valor1 / valor2;
                 break;
                
         

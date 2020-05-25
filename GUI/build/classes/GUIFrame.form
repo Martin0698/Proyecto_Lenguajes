@@ -370,9 +370,6 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JProgressBar" name="jProgressBar1">
-              <Properties>
-                <Property name="value" type="int" value="50"/>
-              </Properties>
             </Component>
             <Component class="javax.swing.JSpinner" name="jSpinner4">
             </Component>

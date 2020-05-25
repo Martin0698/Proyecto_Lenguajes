@@ -228,8 +228,6 @@ public class GUIFrame extends javax.swing.JFrame {
 
         jLabel8.setText("Tareas realizadas");
 
-        jProgressBar1.setValue(50);
-
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -317,8 +315,7 @@ public class GUIFrame extends javax.swing.JFrame {
             int valor1=0;
             int valor2=9;
 
-            this.jProgressBar1.setMinimum(0);
-            this.jProgressBar1.setMaximum(Integer.parseInt(jTextField3.getText()));
+            
             //Validad de Textfield
             
             
@@ -345,6 +342,8 @@ public class GUIFrame extends javax.swing.JFrame {
                espera_producer = Integer.parseInt(jTextField1.getText());
                espera_consumer = Integer.parseInt(jTextField2.getText());
                buffer_t = Integer.parseInt(jTextField3.getText());
+               this.jProgressBar1.setMinimum(0);
+               this.jProgressBar1.setMaximum(buffer_t);
               if (!( (espera_consumer>=0) && (espera_consumer <=10000))){
                   JOptionPane.showMessageDialog(this, "Tiempo de espera en Consumer está fuera  del rango");
                  return;

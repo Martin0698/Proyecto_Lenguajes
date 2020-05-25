@@ -33,11 +33,9 @@ public class Consumer extends Thread {
                 Object[]rowData={operador,valor1,valor2,resultado_scheme};
 
                 if(valor2 == 0){
-                    rowData={operador,valor1,valor2,"INDETERMINADO"};
+                    rowData[3]="INDETERMINADO";
                 }
-                else{
-                   rowData={operador,valor1,valor2,resultado_scheme};
-                }
+
                 this.consumed.addRow(rowData);
                 //TODO: solve scheme operations
                 

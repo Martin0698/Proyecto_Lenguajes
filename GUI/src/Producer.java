@@ -11,21 +11,21 @@ public class Producer extends Thread {
     private int waitMillis;
     private int n;
     private int m;
+    String operaciones;
     private volatile boolean Running = true;
     
-    Producer(Buffer buffer, int ms, int n, int m) {
+    Producer(Buffer buffer, int ms, int n, int m, String operaciones) {
         this.buffer = buffer;
         this.waitMillis = ms;
         this.n= n;
         this.m= m;
+        this.operaciones = operaciones;
     }
     
     @Override
     public void run() {
         System.out.println("Running Producer...");
-        
-        String products = "+-/*";
-        
+         
         //TODO, generate list with the m,n range values.
         
         //TODO Get n m and get the difference;
@@ -40,7 +40,7 @@ public class Producer extends Thread {
         while(Running) {
             r= new Random(System.currentTimeMillis());
             
-            operator = products.charAt((int) (Math.random()*4) );
+            operator = operaciones.charAt((int) (Math.random()*(this.operaciones.length())) );
             int Value1 = (int)(Math.random() *difference)+ n;
             int Value2 = (int)(Math.random() *difference)+ n;
             product="("+operator+" "+ Value1 +" " +Value2+ ")";

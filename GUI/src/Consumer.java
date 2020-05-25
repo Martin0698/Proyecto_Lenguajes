@@ -51,7 +51,7 @@ public class Consumer extends Thread {
                 Object[]rowData={operador,valor1,valor2,resultado_scheme};
 
                 if(valor2 == 0){
-                    rowData[3]="INDETERMINADO";
+                    rowData[3]="INDT";
                 }
 
                 this.consumed.addRow(rowData);

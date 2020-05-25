@@ -1,6 +1,8 @@
 
 import javax.swing.JOptionPane;
 import javax.swing.table.*;
+import javax.swing.JSpinner;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -26,6 +28,7 @@ public class GUIFrame extends javax.swing.JFrame {
         model2.setColumnIdentifiers(colnames2);
         model1.setRowCount(0);
         model2.setRowCount(0);
+        jSpinner4.setEditor(new JSpinner.DefaultEditor(jSpinner4));
         
         /*model1.addRow(new Object[]{"a", "a", "a"});
         model1.addRow(new Object[]{"a", "a", "a"});
@@ -375,7 +378,7 @@ public class GUIFrame extends javax.swing.JFrame {
               }
               jButton1.setText("Stop");
               isRunning = true;
-              Buffer buffer = new Buffer(buffer_t,(DefaultTableModel) jTable1.getModel(),jProgressBar1);
+              Buffer buffer = new Buffer(buffer_t,(DefaultTableModel) jTable1.getModel(),jProgressBar1,this.jSpinner4);
               producers = new Producer[cant_producer];
               consumers = new Consumer[cant_consumer];
               

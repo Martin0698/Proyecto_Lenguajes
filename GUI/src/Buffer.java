@@ -7,22 +7,27 @@ import java.util.Queue;
 import java.util.LinkedList;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JProgressBar;
+import javax.swing.JSpinner;
 
 public class Buffer {
     
     private Queue<String> buffer;
     private int MAX_SIZE;
     private int elements;
+    private int consumeCount;
     DefaultTableModel productions;
     JProgressBar progressbar;
+    JSpinner jSpinner4;
     //private char buffer;
     
-    Buffer(int size, DefaultTableModel productions, JProgressBar progressbar) {
+    Buffer(int size, DefaultTableModel productions, JProgressBar progressbar,JSpinner jSpinner4) {
         this.buffer = new LinkedList<String>();
         this.MAX_SIZE = size;
         this.productions = productions;
         this.progressbar = progressbar;
         this.count = 0;
+        this.consumeCount = 0;
+        this.jSpinner4 = jSpinner4;
     }
     public void updateTable(){
         this.progressbar.setValue(this.elements);
@@ -46,6 +51,7 @@ public class Buffer {
         //this.buffer = 0;
         notify();
         updateTable();
+        this.jSpinner4.setValue(++this.consumeCount);
         return product;
     }
     

@@ -32,7 +32,7 @@ public class Consumer extends Thread {
             int valor2 = Character.getNumericValue(product.charAt(5));
             Object[]rowData={operador,valor1,valor2,resultado_scheme};
 
-            if(valor2 == 0){
+            if(valor2 == 0 && operador == '/'){
                 rowData[3]="INDT";
             }
 

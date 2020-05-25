@@ -266,8 +266,33 @@ public class GUIFrame extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+<<<<<<< HEAD
         
         
+=======
+        int bufferSize=1;
+        int consumers=1;
+        int producers=1;
+        int msp=1;
+        int msc=1;
+        int from=1;
+        int to=1;
+        try {
+            msp = Integer.parseInt(jTextField1.getText());
+            msc = Integer.parseInt(jTextField2.getText());
+            bufferSize = Integer.parseInt(jTextField3.getText());
+            from = Integer.parseInt(jTextField4.getText());
+            consumers = (Integer)jSpinner1.getValue();
+            producers = (Integer)jSpinner2.getValue();
+            to = (Integer)jSpinner3.getValue();
+            Buffer buffer = new Buffer(bufferSize);
+        
+            Producer producer = new Producer(buffer,producers,msp,from,to+1);
+            producer.start();
+        
+            Consumer consumer = new Consumer(buffer,consumers,msc);
+            consumer.start();
+>>>>>>> master
         
         if(!isRunning){
             int cant_producer=  (int) jSpinner1.getValue() ;
@@ -355,6 +380,7 @@ public class GUIFrame extends javax.swing.JFrame {
                 }
             }
         }
+         
         
     }//GEN-LAST:event_jButton1ActionPerformed
 

@@ -30,7 +30,14 @@ public class Consumer extends Thread {
                 char operador = product.charAt(1);
                 int valor1 = Character.getNumericValue(product.charAt(3));                
                 int valor2 = Character.getNumericValue(product.charAt(5));
-                Object[]rowData={operador,valor1,valor2,resultado_scheme};
+                Object[]rowData;
+
+                if(valor2 == 0){
+                    Object[]rowData={operador,valor1,valor2,"INDETERMINADO"};
+                }
+                else{
+                   rowData={operador,valor1,valor2,resultado_scheme};
+                }
                 this.consumed.addRow(rowData);
                 //TODO: solve scheme operations
                 
@@ -63,7 +70,11 @@ public class Consumer extends Thread {
                 result= valor1 * valor2;
                 break;
                 case '/':
-                    if(valor2 == 0) result = 0;
+                    if(valor2 == 0) {
+                        result = 0;
+                        System.out.println("indeterminado");
+                    }
+
                     else result= valor1 / valor2;
                 break;
                

@@ -17,13 +17,10 @@ public class GUIFrame extends javax.swing.JFrame {
      * Creates new form GUIFrame
      */
     public GUIFrame() {
-        initComponents();
+
         DefaultTableModel model1 = (DefaultTableModel) jTable1.getModel();
         DefaultTableModel model2 = (DefaultTableModel) jTable2.getModel();
-        Object[]colnames1={"Operador","Valor1","Valor2",""};
-        Object[]colnames2={"Operador","Valor1","Valor2","Resultado"};
-        model1.setColumnIdentifiers(colnames1);
-        model2.setColumnIdentifiers(colnames2);
+
         model1.setRowCount(0);
         model2.setRowCount(0);
         
@@ -339,6 +336,11 @@ public class GUIFrame extends javax.swing.JFrame {
               }
         }
         else{
+        initComponents();
+        Object[]colnames1={"Operador","Valor1","Valor2",""};
+        Object[]colnames2={"Operador","Valor1","Valor2","Resultado"};
+        model1.setColumnIdentifiers(colnames1);
+        model2.setColumnIdentifiers(colnames2);
             isRunning = false;
             jButton1.setText("Start");
             for(Producer p : producers){

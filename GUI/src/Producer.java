@@ -24,14 +24,10 @@ public class Producer extends Thread {
     
     @Override
     public void run() {
-        System.out.println("Running Producer...");
+        log("Running Producer...");
          
-        //TODO, generate list with the m,n range values.
-        
-        //TODO Get n m and get the difference;
         int difference = m-n;
       
-        
         Random r, rval1, rval2;
         rval1 = new Random(System.currentTimeMillis());
             rval2 = new Random(System.currentTimeMillis());
@@ -46,21 +42,25 @@ public class Producer extends Thread {
             product="("+operator+" "+ Value1 +" " +Value2+ ")";
             
             this.buffer.produce(product);
-            //System.out.println("Producer produced: " + product);
             Buffer.print("Producer " + this.getId() + " produced: " + product);
             
             try {
                 Thread.sleep(this.waitMillis);
             } catch (InterruptedException ex) {
-                System.out.println("Stopped thread");
+                log("Stopped thread");
             }
             
         }
     }
     
     public void terminate(){
-        System.out.println("Stopping producer...");
+        log("Stopping producer...");
         Running = false;
+    }
+    
+        private void log (Object obj){
+
+        System.out.println(obj);
     }
     
 }

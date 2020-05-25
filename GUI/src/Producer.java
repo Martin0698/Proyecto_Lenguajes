@@ -8,7 +8,6 @@ import java.util.logging.Logger;
 
 public class Producer extends Thread {
     Buffer buffer;
-<<<<<<< HEAD
     private int waitMillis;
     private int n;
     private int m;
@@ -19,29 +18,11 @@ public class Producer extends Thread {
         this.waitMillis = ms;
         this.n= n;
         this.m= m;
-=======
-    int producers;
-    int ms;
-    int from;
-    int to;
-    Producer(Buffer buffer,int producers,int ms, int from,int to) {
-        this.buffer = buffer;
-        this.producers=producers;
-        this.ms = ms;
-        this.from=from;
-        this.to=to;
->>>>>>> master
     }
-   public int getRandom(int from, int to) {
-    if (from < to)
-        return from + new Random().nextInt(Math.abs(to - from));
-    return from - new Random().nextInt(Math.abs(to - from));
-    }   
     
     @Override
     public void run() {
         System.out.println("Running Producer...");
-<<<<<<< HEAD
         
         String products = "+-/*";
         
@@ -70,22 +51,6 @@ public class Producer extends Thread {
             
             try {
                 Thread.sleep(this.waitMillis);
-=======
-        //String products = "AEIOU";
-        //Random r = new Random(System.currentTimeMillis());
-        //char product;
-        
-        for(int i=0 ; i<producers ; i++) {
-            //product = products.charAt(r.nextInt(5));
-            //this.buffer.produce(product);
-            int number = getRandom(from,to);
-            this.buffer.produce(number);
-            //System.out.println("Producer produced: " + product);
-            Buffer.print("Producer produced: " + number);
-            
-            try {
-                Thread.sleep(this.ms);
->>>>>>> master
             } catch (InterruptedException ex) {
                 System.out.println("Stopped thread");
             }

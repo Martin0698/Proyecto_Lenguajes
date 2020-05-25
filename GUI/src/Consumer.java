@@ -49,7 +49,37 @@ public class Consumer extends Thread {
     }
 
     public int schemesolver(String operacion){
+        
+        char operador = operacion.charAt(1);
 
+        int valor1 = Character.getNumericValue(operacion.charAt(3));
+        int valor2 = Character.getNumericValue(operacion.charAt(5));
+
+        int result= 0;
+
+        switch(operador){
+            case '+':
+                result= valor1 + valor2;
+                break;
+            case '-':
+                result= valor1 - valor2;
+                break;
+            case '*':
+                result= valor1 * valor2;
+                break;
+            case '/':
+                if(valor2 == 0) {
+                    result = 0;
+                    log("indeterminado");
+                }
+
+                else result= valor1 / valor2;
+                break;
+
+
+        }
+
+        return  result;
 
     }
 
